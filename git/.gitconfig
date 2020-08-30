@@ -1,0 +1,50 @@
+[user]
+    name = [Name goes here]
+    email = [e-mail goes here]
+[alias]
+    lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
+    changelog = log --no-merges --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset'
+    la = lg --all
+    co = checkout
+    cb = checkout -b
+    br = branch
+    ci = commit
+    cn = commit --no-verify
+    st = status
+    rb = rebase
+    rs = reset
+    cp = cherry-pick
+    df = diff --ignore-all-space
+    ds = diff --staged --ignore-all-space
+    w  = diff --ignore-all-space --word-diff
+    ws = diff --staged --ignore-all-space --word-diff
+    ft = fetch
+    fp = fetch --prune
+    sh = show --ignore-all-space
+    sw = show --ignore-all-space --word-diff
+    pr = pull --rebase
+    zip = archive --format=zip -o latest.zip HEAD
+    uncommit = reset HEAD~1
+
+    ##################################################
+    ################## DANGER ZONE ###################
+    ##################################################
+
+    go = push -f
+    justgo = push -f --no-verify
+    wip = "!git add --all; git ci -m wip --no-verify"
+
+    # $1 a different repository path
+    # $2 the sha of a commit in $1
+    # Copies the commit from another repo to the current repo
+    transfer = "!f() { git --git-dir=\"$1\"/.git format-patch -k -1 --stdout \"$2\" | git am -3 -k; }; f"
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[merge]
+	tool = kdiff3
+[core]
+	editor = /usr/bin/vim
+	pager = diff-so-fancy | less --tabs=4 -RFX
